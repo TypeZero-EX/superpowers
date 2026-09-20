@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Northline HR</title>
+<!--
+  TEMPLATE NOTES — swap these before you publish:
+  1. "Northline HR" everywhere (nav, footer, title tag) -> your practice name
+  2. hello@example.com / +1 (555) 010-0143 -> your real contact details
+  3. $X,XXX prices -> your rates, or delete the pricing section
+  4. The five "Client logo" slots -> your client marks, or delete the strip
+  5. The contact form has no backend. Point the <form> action at your form
+     service (Formspree, Basin, Netlify Forms) or delete it and keep the
+     mailto link.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap">
+<style>
+:root{
+  --ground:#FAFBFA;
+  --surface:#FFFFFF;
+  --tint:#EFF4F2;
+  --ink:#101815;
+  --muted:#586762;
+  --line:#DBE3E0;
+  --line-soft:#E8EEEB;
+  --accent:#16685A;
+  --accent-ink:#0D4D42;
+  --accent-soft:#E2F0EC;
+  --shadow:0 1px 2px rgba(16,24,21,.04), 0 14px 32px -24px rgba(16,24,21,.4);
+
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+  --wrap:1080px;
+  --gutter:clamp(20px,5vw,44px);
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1412;
+    --surface:#141B19;
+    --tint:#18211E;
+    --ink:#E9EFEC;
+    --muted:#96A7A1;
+    --line:#26312E;
+    --line-soft:#1E2724;
+    --accent:#54C3A9;
+    --accent-ink:#7FD8C2;
+    --accent-soft:#14302A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -26px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1412;
+  --surface:#141B19;
+  --tint:#18211E;
+  --ink:#E9EFEC;
+  --muted:#96A7A1;
+  --line:#26312E;
+  --line-soft:#1E2724;
+  --accent:#54C3A9;
+  --accent-ink:#7FD8C2;
+  --accent-soft:#14302A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -26px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+a{color:var(--accent);text-underline-offset:3px}
+::selection{background:var(--accent-soft);color:var(--accent-ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+.eyebrow{
+  font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 14px;
+}
+h1,h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.015em;text-wrap:balance}
+h2{font-size:clamp(1.7rem,3.6vw,2.4rem);line-height:1.15;margin:0 0 14px}
+.sub{color:var(--muted);max-width:56ch;margin:0 0 34px;font-size:1.02rem}
+
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--body);font-size:.95rem;font-weight:500;
+  padding:12px 20px;border-radius:999px;text-decoration:none;cursor:pointer;
+  border:1px solid transparent;transition:transform .15s ease, background .15s ease;
+}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+:root[data-theme="dark"] .btn-primary, :root:not([data-theme="light"]) .btn-primary{color:#07100E}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .btn-primary{color:#fff}}
+.btn-primary:hover{background:var(--accent-ink);transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:var(--surface)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:30;
+  background:color-mix(in srgb, var(--ground) 86%, transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft);
+}
+.nav-in{display:flex;align-items:center;gap:18px;min-height:66px}
+.brand{
+  display:flex;align-items:center;gap:9px;margin-right:auto;
+  text-decoration:none;color:var(--ink);font-family:var(--display);font-size:1.16rem;
+}
+.brand span.dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
+.nav-links{display:flex;gap:26px}
+.nav-links a{font-size:.94rem;color:var(--muted);text-decoration:none}
+.nav-links a:hover{color:var(--ink)}
+@media (max-width:820px){.nav-links{display:none}}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(3rem,7vw,5.4rem) clamp(2.4rem,5vw,4rem)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,3.6rem);align-items:center}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+h1{font-size:clamp(2.3rem,5.6vw,3.5rem);line-height:1.06;margin:0 0 20px}
+.hero p.lede{font-size:1.12rem;color:var(--muted);max-width:52ch;margin:0 0 30px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta-note{font-size:.88rem;color:var(--muted);margin:16px 0 0}
+
+.panel{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.panel-head{
+  padding:14px 18px;border-bottom:1px solid var(--line-soft);background:var(--tint);
+  font-size:.76rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+}
+.checklist{list-style:none;margin:0;padding:6px 18px 16px}
+.checklist li{display:flex;gap:12px;align-items:flex-start;padding-block:11px;border-bottom:1px solid var(--line-soft);font-size:.96rem}
+.checklist li:last-child{border-bottom:0}
+.tick{flex:none;width:19px;height:19px;border-radius:50%;background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;font-size:.68rem;margin-top:3px;font-weight:600}
+.checklist .when{margin-left:auto;color:var(--muted);font-size:.82rem;white-space:nowrap;padding-left:10px}
+
+/* ---------- logo strip ---------- */
+.strip{border-block:1px solid var(--line-soft);background:var(--tint)}
+.strip-in{display:flex;flex-wrap:wrap;align-items:center;gap:18px 40px;padding-block:22px}
+.strip p{margin:0;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.slot{
+  flex:1 1 120px;min-width:110px;max-width:170px;height:34px;border:1px dashed var(--line);
+  border-radius:6px;display:grid;place-items:center;color:var(--muted);font-size:.78rem;
+}
+
+/* ---------- sections ---------- */
+section.band{padding-block:clamp(3.2rem,7vw,5.2rem)}
+section.alt{background:var(--tint);border-block:1px solid var(--line-soft)}
+.head-row{display:flex;flex-wrap:wrap;gap:18px 40px;align-items:flex-end;justify-content:space-between;margin-bottom:34px}
+.head-row .sub{margin-bottom:0}
+
+/* ---------- services ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.cards{grid-template-columns:1fr}}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:22px 20px;display:flex;flex-direction:column;gap:8px;
+}
+.card h3{font-size:1.14rem;margin:0}
+.card p{margin:0;color:var(--muted);font-size:.95rem}
+.card ul{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:.9rem;display:flex;flex-direction:column;gap:4px}
+
+/* ---------- process ---------- */
+.process{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+@media (max-width:820px){.process{grid-template-columns:1fr}}
+.phase{padding:24px 22px;border-right:1px solid var(--line-soft)}
+.phase:last-child{border-right:0}
+@media (max-width:820px){.phase{border-right:0;border-bottom:1px solid var(--line-soft)}.phase:last-child{border-bottom:0}}
+.phase .n{
+  display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;
+  background:var(--accent-soft);color:var(--accent-ink);font-size:.82rem;font-weight:600;margin-bottom:12px;
+}
+:root[data-theme="dark"] .phase .n, :root:not([data-theme="light"]) .phase .n{color:var(--accent)}
+.phase h3{font-size:1.1rem;margin:0 0 4px}
+.phase .dur{font-size:.8rem;color:var(--accent);font-weight:600;margin:0 0 10px}
+.phase p{margin:0;color:var(--muted);font-size:.94rem}
+
+/* ---------- rhythm ---------- */
+.rhythm{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.rhythm{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.rhythm{grid-template-columns:1fr}}
+.cycle{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.cycle h3{font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 12px;font-family:var(--body)}
+.cycle ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.cycle li{font-size:.92rem;color:var(--muted);padding-left:14px;position:relative}
+.cycle li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--line)}
+.fineprint{margin:22px 0 0;font-size:.86rem;color:var(--muted);max-width:70ch}
+
+/* ---------- pricing ---------- */
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}
+@media (max-width:860px){.tiers{grid-template-columns:1fr}}
+.tier{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;display:flex;flex-direction:column;gap:14px}
+.tier.featured{border-color:var(--accent);box-shadow:var(--shadow)}
+.tier .kicker{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tier h3{font-size:1.24rem;margin:0}
+.badge{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--accent-soft);color:var(--accent-ink);padding:3px 9px;border-radius:999px}
+:root[data-theme="dark"] .badge, :root:not([data-theme="light"]) .badge{color:var(--accent)}
+.price{font-family:var(--display);font-size:1.9rem;line-height:1;margin:0}
+.price small{font-family:var(--body);font-size:.85rem;color:var(--muted);font-weight:400}
+.tier p.what{margin:0;color:var(--muted);font-size:.94rem}
+.tier ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;font-size:.93rem;color:var(--muted)}
+.tier li{display:flex;gap:9px}
+.tier li::before{content:"+";color:var(--accent);font-weight:600;flex:none}
+.tier .btn{justify-content:center;margin-top:auto}
+
+/* ---------- faq ---------- */
+.faq{border-top:1px solid var(--line);max-width:72ch}
+details{border-bottom:1px solid var(--line)}
+summary{
+  cursor:pointer;list-style:none;padding-block:18px;font-size:1.04rem;font-weight:500;
+  display:flex;gap:16px;align-items:flex-start;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";margin-left:auto;color:var(--accent);font-size:1.2rem;line-height:1;flex:none}
+details[open] summary::after{content:"–"}
+details p{margin:0 0 18px;color:var(--muted);font-size:.97rem;max-width:64ch}
+
+/* ---------- contact ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4vw,3rem);align-items:start}
+@media (max-width:820px){.contact-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:.84rem;font-weight:500}
+.field input,.field select,.field textarea{
+  font-family:var(--body);font-size:.96rem;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:10px 12px;
+}
+.field textarea{resize:vertical;min-height:96px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){.field-row{grid-template-columns:1fr}}
+.form-note{font-size:.84rem;color:var(--muted);margin:10px 0 0}
+.status{font-size:.9rem;margin:12px 0 0;color:var(--accent);font-weight:500}
+.contact-list{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.contact-list li{display:flex;gap:10px;font-size:.96rem;color:var(--muted)}
+.contact-list b{color:var(--ink);font-weight:500;min-width:74px}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding-block:30px 42px;background:var(--tint)}
+.foot{display:flex;flex-wrap:wrap;gap:14px 30px;justify-content:space-between;align-items:baseline}
+.foot p{margin:0;font-size:.86rem;color:var(--muted)}
+.foot nav{display:flex;flex-wrap:wrap;gap:20px}
+.foot nav a{font-size:.86rem;color:var(--muted);text-decoration:none}
+.foot nav a:hover{color:var(--accent)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="dot"></span>Northline HR</a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#process">How we work</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Book an intro call</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Fractional HR · 10–250 employees</p>
+        <h1>Someone has to own HR. Let it be us.</h1>
+        <p class="lede">Payroll and benefits administration, compliance filings, hiring and onboarding, and the conversations nobody wants to have — run by people who do this every day, for a fixed monthly fee.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#contact">Book a 30-minute intro</a>
+          <a class="btn btn-ghost" href="#services">See what's covered</a>
+        </div>
+        <p class="cta-note">No PEO lock-in. You keep your payroll provider and your data.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">A typical first 30 days</div>
+        <ul class="checklist">
+          <li><span class="tick">✓</span> Personnel files and I-9s audited <span class="when">Week 1</span></li>
+          <li><span class="tick">✓</span> Exempt / non-exempt classifications reviewed <span class="when">Week 1</span></li>
+          <li><span class="tick">✓</span> Handbook updated for every state you hire in <span class="when">Week 2</span></li>
+          <li><span class="tick">✓</span> Offer letter and onboarding templates rebuilt <span class="when">Week 3</span></li>
+          <li><span class="tick">✓</span> Payroll calendar and approval chain documented <span class="when">Week 3</span></li>
+          <li><span class="tick">✓</span> Written risk register, ranked by exposure <span class="when">Week 4</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap strip-in">
+      <p>Trusted by</p>
+      <div class="slot">Client logo</div>
+      <div class="slot">Client logo</div>
+      <div class="slot">Client logo</div>
+      <div class="slot">Client logo</div>
+      <div class="slot">Client logo</div>
+    </div>
+  </div>
+
+  <section class="band" id="services">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <p class="eyebrow">Services</p>
+          <h2>The whole function, or the parts you're missing.</h2>
+        </div>
+        <p class="sub">Most teams start with compliance and payroll, then hand us hiring once they trust us with the hard stuff.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <h3>Hiring &amp; onboarding</h3>
+          <p>From the scorecard to day one.</p>
+          <ul>
+            <li>Role scorecards and structured interview loops</li>
+            <li>Offer letters and background checks</li>
+            <li>I-9, W-4, and state withholding collection</li>
+            <li>Day-one checklists and 30/60/90 plans</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Payroll &amp; benefits</h3>
+          <p>Runs on time, reconciles to the penny.</p>
+          <ul>
+            <li>Semi-monthly or biweekly payroll review</li>
+            <li>Open enrollment and carrier changes</li>
+            <li>COBRA, FSA, and 401(k) deferral administration</li>
+            <li>Monthly benefits invoice reconciliation</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Compliance</h3>
+          <p>The filings and the paperwork behind them.</p>
+          <ul>
+            <li>Handbooks with state-specific addenda</li>
+            <li>FLSA classification reviews</li>
+            <li>EEO-1 and ACA reporting support</li>
+            <li>Required postings and record retention</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Employee relations</h3>
+          <p>Handled early, documented properly.</p>
+          <ul>
+            <li>Complaint intake and workplace investigations</li>
+            <li>Performance improvement plans</li>
+            <li>Terminations, severance, and offboarding</li>
+            <li>Documentation that stands up later</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Managers &amp; performance</h3>
+          <p>Your managers stop guessing.</p>
+          <ul>
+            <li>Review cycles people actually finish</li>
+            <li>Compensation bands and promotion criteria</li>
+            <li>Manager coaching on feedback and conflict</li>
+            <li>Engagement surveys with a follow-up plan</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>HR systems</h3>
+          <p>One place your people data lives.</p>
+          <ul>
+            <li>HRIS and ATS selection and migration</li>
+            <li>Org charts and headcount planning</li>
+            <li>PTO policy setup and accrual rules</li>
+            <li>Turnover and headcount reporting</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt" id="process">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <p class="eyebrow">How we work</p>
+          <h2>Audit first. Nobody fixes what they haven't counted.</h2>
+        </div>
+        <p class="sub">Three stages, in order. You can stop after the audit and take the findings to someone else — that's a real option, not a sales line.</p>
+      </div>
+
+      <div class="process">
+        <div class="phase">
+          <span class="n">1</span>
+          <h3>Audit</h3>
+          <p class="dur">Weeks 1–2</p>
+          <p>We read every file: personnel records, I-9s, offer letters, the handbook, payroll setup, classifications. You get a written risk register ranked by exposure, and a fix list with owners.</p>
+        </div>
+        <div class="phase">
+          <span class="n">2</span>
+          <h3>Stabilize</h3>
+          <p class="dur">Days 30–90</p>
+          <p>We clear the urgent items — missing I-9s, misclassified roles, a handbook that predates your last three state hires — and rebuild the templates your managers use every week.</p>
+        </div>
+        <div class="phase">
+          <span class="n">3</span>
+          <h3>Run</h3>
+          <p class="dur">Ongoing</p>
+          <p>A named HR lead, a shared inbox your team writes to directly, payroll and compliance on a calendar, and a monthly report on headcount, turnover, and what's coming.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <p class="eyebrow">The HR year</p>
+          <h2>What we're tracking while you run the business.</h2>
+        </div>
+        <p class="sub">HR is mostly rhythm. Miss a date and it becomes a penalty, or a conversation with an attorney.</p>
+      </div>
+
+      <div class="rhythm">
+        <div class="cycle">
+          <h3>Every pay period</h3>
+          <ul>
+            <li>Payroll register review before submission</li>
+            <li>New hire I-9s within three business days</li>
+            <li>PTO accruals and unpaid leave adjustments</li>
+            <li>Termination final-pay timing by state</li>
+          </ul>
+        </div>
+        <div class="cycle">
+          <h3>Monthly</h3>
+          <ul>
+            <li>Benefits invoice reconciled to the census</li>
+            <li>Headcount, turnover, and open-role report</li>
+            <li>New-hire 30-day check-ins</li>
+            <li>Policy updates for any new work state</li>
+          </ul>
+        </div>
+        <div class="cycle">
+          <h3>Quarterly</h3>
+          <ul>
+            <li>Form 941 review with your payroll provider</li>
+            <li>Classification and overtime spot check</li>
+            <li>Manager performance conversations</li>
+            <li>Compensation vs. market drift</li>
+          </ul>
+        </div>
+        <div class="cycle">
+          <h3>Annually</h3>
+          <ul>
+            <li>Open enrollment, start to finish</li>
+            <li>W-2s and ACA 1095-C distribution</li>
+            <li>EEO-1 filing where headcount requires it</li>
+            <li>Handbook refresh and re-acknowledgement</li>
+          </ul>
+        </div>
+      </div>
+      <p class="fineprint">Filing obligations vary by headcount, entity type, and the states you employ people in. We confirm which apply to you during the audit — and we work with your employment counsel on anything that needs a legal opinion.</p>
+    </div>
+  </section>
+
+  <section class="band alt" id="pricing">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <p class="eyebrow">Pricing</p>
+          <h2>Fixed fees. No per-conversation billing.</h2>
+        </div>
+        <p class="sub">Your team should be able to ask HR a question without someone doing mental math about the invoice.</p>
+      </div>
+
+      <div class="tiers">
+        <div class="tier">
+          <div class="kicker"><h3>Audit</h3></div>
+          <p class="price">$X,XXX <small>one-time</small></p>
+          <p class="what">Two weeks, then a written verdict on where you actually stand.</p>
+          <ul>
+            <li>Full file and policy review</li>
+            <li>Classification and payroll setup check</li>
+            <li>Risk register ranked by exposure</li>
+            <li>Prioritized fix list with effort estimates</li>
+          </ul>
+          <a class="btn btn-ghost" href="#contact">Start with an audit</a>
+        </div>
+
+        <div class="tier featured">
+          <div class="kicker"><h3>Fractional HR</h3><span class="badge">Most teams</span></div>
+          <p class="price">$X,XXX <small>/ month</small></p>
+          <p class="what">We are your HR team. Named lead, shared inbox, same-day answers.</p>
+          <ul>
+            <li>Everything in Services, ongoing</li>
+            <li>Payroll and benefits administration</li>
+            <li>Employee relations and investigations</li>
+            <li>Monthly people report to your leadership</li>
+            <li>Onboarding and offboarding run end to end</li>
+          </ul>
+          <a class="btn btn-primary" href="#contact">Book an intro call</a>
+        </div>
+
+        <div class="tier">
+          <div class="kicker"><h3>Build &amp; transition</h3></div>
+          <p class="price">Custom</p>
+          <p class="what">For teams past ~150 people who need HR in-house.</p>
+          <ul>
+            <li>Hire and onboard your first HR lead</li>
+            <li>Document every process we've been running</li>
+            <li>Systems and data handover</li>
+            <li>Six months of advisory backup</li>
+          </ul>
+          <a class="btn btn-ghost" href="#contact">Talk it through</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="faq">
+    <div class="wrap">
+      <p class="eyebrow">Questions</p>
+      <h2>The ones we get on every intro call.</h2>
+      <div class="faq" style="margin-top:28px">
+        <details open>
+          <summary>Are you a PEO?</summary>
+          <p>No. A PEO becomes the co-employer of record and takes your payroll and benefits onto their contracts. We work alongside whatever you already use — your payroll provider, your broker, your carriers — and you keep the relationships and the data. If you're currently on a PEO and want out, we've run that exit before.</p>
+        </details>
+        <details>
+          <summary>Do you replace an in-house HR person?</summary>
+          <p>Under about 150 employees, we usually are the HR team, and it costs less than a senior generalist. Past that, most companies want someone in the building — so we build the function, hire your first HR lead, and hand it over. That's the Build &amp; transition engagement.</p>
+        </details>
+        <details>
+          <summary>Can you give us legal advice?</summary>
+          <p>No, and you should be wary of any HR firm that says otherwise. We identify risk, document properly, and keep you inside standard practice. When something needs a legal opinion — a contested termination, a discrimination claim, a non-compete question — we brief your employment counsel and work with them.</p>
+        </details>
+        <details>
+          <summary>We hire in several states. Is that a problem?</summary>
+          <p>It's the normal case now. Each state you employ someone in brings its own leave rules, final-pay timing, posting requirements, and handbook addenda. We map it per state during the audit and keep it current as you add locations.</p>
+        </details>
+        <details>
+          <summary>How fast can you start?</summary>
+          <p>The audit usually begins within two weeks of signing, and takes two weeks to complete. If you're in the middle of something urgent — an investigation, a layoff, an open enrollment deadline — say so on the intro call and we'll tell you honestly whether we can take it on right now.</p>
+        </details>
+        <details>
+          <summary>What does it take from our side?</summary>
+          <p>About two hours in week one for access and context, then roughly an hour a month with leadership. Your managers get a place to send questions. Nobody on your team has to become a part-time HR administrator.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt" id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <p class="eyebrow">Get started</p>
+          <h2>Thirty minutes, and you'll know where you stand.</h2>
+          <p class="sub">Tell us your headcount, the states you hire in, and what's keeping you up. We'll tell you what we'd look at first — whether or not you hire us.</p>
+          <ul class="contact-list">
+            <li><b>Email</b> <a href="mailto:hello@example.com">hello@example.com</a></li>
+            <li><b>Phone</b> <a href="tel:+15550100143">+1 (555) 010-0143</a></li>
+            <li><b>Hours</b> Monday–Friday, 8am–6pm CT</li>
+          </ul>
+        </div>
+
+        <form class="panel" id="intro-form" style="padding:22px" novalidate>
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input type="text" id="f-name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Work email</label>
+            <input type="email" id="f-email" name="email" autocomplete="email" required>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-size">Headcount</label>
+              <select id="f-size" name="headcount">
+                <option>1–10</option>
+                <option selected>11–50</option>
+                <option>51–150</option>
+                <option>151–250</option>
+                <option>250+</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-states">States you hire in</label>
+              <input type="text" id="f-states" name="states" placeholder="TX, CA, NY">
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-msg">What's the pressing problem?</label>
+            <textarea id="f-msg" name="message" placeholder="Open enrollment is in six weeks and nobody owns it."></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Request an intro call</button>
+          <p class="form-note">We reply within one business day. Nothing you send here goes to a mailing list.</p>
+          <p class="status" id="form-status" hidden></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p>© 2026 Northline HR · Fractional HR and people operations</p>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:hello@example.com">hello@example.com</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById("intro-form");
+  var status = document.getElementById("form-status");
+  if(!form) return;
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var name = document.getElementById("f-name");
+    var email = document.getElementById("f-email");
+    var missing = [];
+    if(!name.value.trim()) missing.push("your name");
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) missing.push("a valid work email");
+    status.hidden = false;
+    if(missing.length){
+      status.style.color = "#B3261E";
+      status.textContent = "Add " + missing.join(" and ") + " so we can reply.";
+      (missing[0] === "your name" ? name : email).focus();
+      return;
+    }
+    status.style.color = "";
+    status.textContent = "Looks good — but this form isn't connected to a backend yet. Point the form at your form service, or email hello@example.com.";
+  });
+})();
+</script>
+
+</body>
+</html>
